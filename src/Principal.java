@@ -70,7 +70,9 @@ public class Principal {
 
                                                   case '8':
 
-                                                  default: System.out.println("0_0");
+                                                  default: 
+                                                	  System.out.println("0_0");
+                                                	  
 
                                      }
 

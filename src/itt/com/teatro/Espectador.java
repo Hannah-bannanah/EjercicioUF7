@@ -85,4 +85,15 @@ public class Espectador {
 	public String toString() {
 		return "Espectador:\nNombre: " + this.nombre + "\nTlf: " + this.tlf + "\nEdad: " + this.edad;
 	}
+	
+	@Override
+	protected void finalize() {
+		
+		try {
+			super.finalize();
+		} catch (Throwable e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 }

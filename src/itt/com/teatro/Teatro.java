@@ -62,7 +62,7 @@ public class Teatro extends Local implements Sala{
 		this.precio = precio;
 		this.localidades = new Espectador[filas][butacas];
 	}
-
+	
 	/**
 	 * @return the obra
 	 */
@@ -133,7 +133,7 @@ public class Teatro extends Local implements Sala{
 		for (int f = 0; f < this.localidades.length; f++) {
 			for (int b = 0; b < this.localidades[f].length; b++) {
 				if (this.localidades[f][b] != null) {
-					localidadesOcupadas = localidadesOcupadas + f + ":" + b + "\n";
+					localidadesOcupadas = localidadesOcupadas + (f + 1) + ":" + (b + 1) + "\n";
 				}
 			}
 		}
@@ -150,16 +150,11 @@ public class Teatro extends Local implements Sala{
 	 * @return una cadena informando del éxito o fracaso de la operación
 	 */
 	public String venderLocalidad(int fila, int butaca, Espectador e) {
-		if (this.localidades[fila][butaca] != null) {
+		if (this.localidades[fila - 1][butaca - 1] != null) {
 			return "Esa localidad ya está ocupada. Seleccione otra localidad";
 		} else {
-			if (fila > 0 && butaca > 0 && fila < this.localidades.length && butaca < this.localidades[0].length) {
-				this.localidades[fila-1][butaca-1] = e;
-				return this.consultarLocalidad(fila, butaca);
-			} else {
-				return "Introduzca un número de fila entre 1 y "  + this.localidades.length + 
-						" y un número de butaca entre 1 y " + this.localidades[0].length;
-			}
+			this.localidades[fila-1][butaca-1] = e;
+			return this.consultarLocalidad(fila, butaca);
 		}
 	}
 	
@@ -170,10 +165,10 @@ public class Teatro extends Local implements Sala{
 	 * @return una cadena informando del éxito of fracaso de la operación
 	 */
 	public String cancelarLocalidad(int fila, int butaca) {
-		if (this.localidades[fila][butaca] == null) {
+		if (this.localidades[fila - 1][butaca - 1] == null) {
 			return "La localidad indicada ya está libre";
 		} else {
-			this.localidades[fila][butaca] = null;
+			this.localidades[fila - 1][butaca -1] = null;
 			return "Localidad " + fila + ":" + butaca + " queda libre";
 		}
 	}
@@ -186,10 +181,10 @@ public class Teatro extends Local implements Sala{
 	 */
 	public String consultarLocalidad(int fila, int butaca) {
 		String cadena = "La localidad " + fila + ":" + butaca;
-		if (this.localidades[fila][butaca] == null) {
+		if (this.localidades[fila - 1][butaca - 1] == null) {
 			cadena = cadena + " está libre";
 		} else {
-			cadena = cadena + " está ocupada por el " + this.localidades[fila][butaca].toString();
+			cadena = cadena + " está ocupada por el " + this.localidades[fila - 1][butaca - 1].toString();
 		}
 		return cadena;
 	}
@@ -206,6 +201,15 @@ public class Teatro extends Local implements Sala{
 			}
 		}
 		return espectadores * this.precio;
+	}
+	
+	@Override
+	protected void finalize() {
+		for (int f = 0; f < this.localidades.length; f ++) {
+			for (int b = 0; b < this.localidades[f].length; b++) {
+				this.localidades[f][b] = null;
+			}
+		}
 	}
 	
 }
