@@ -1,5 +1,10 @@
 package itt.com.teatro;
-
+/**
+ * La clase Obra representa obras de teatro
+ * @author hannnah
+ * @version 1.0
+ * @since 1.0
+ */
 public class Obra {
 	private String titulo;
 	private String genero;
