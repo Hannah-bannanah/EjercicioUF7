@@ -1,5 +1,4 @@
-import itt.com.teatro.Teatro;
-import itt.com.teatro.Obra;
+import itt.com.teatro.*;
 import java.util.Scanner;
 
 public class Principal {
@@ -19,19 +18,55 @@ public class Principal {
 
                                     switch (opc) {
 
-                                                  case '1':
+                                                  case '1': System.out.println(teatro.verProgramacion());
+                                                  break;
 
-                                                  case '2':
+                                                  case '2': System.out.println(teatro.verLocalidades());
+                                                  break;
 
-                                                  case '3':
+                                                  case '3': System.out.println(teatro.verLocalidadesOcupadas());
+                                                  break;
 
-                                                  case '4':
+                                                  case '4': 
+                                                	  System.out.println("Introduzca fila");
+                                                	  int filaVenta = lector.nextInt();
+                                                	  lector.nextLine();
+                                                	  System.out.println("Introduzca butaca");
+                                                	  int butacaVenta = lector.nextInt();
+                                                	  lector.nextLine();
+                                                	  System.out.println("Introduzca nombre del espectador");
+                                                	  String nombreEspectador = lector.nextLine();
+                                                	  System.out.println("Introduzca teléfono del espectador");
+                                                	  String tlfEspectador = lector.nextLine();
+                                                	  System.out.println("Introduzca edad del espectador");
+                                                	  int edadEspectador = lector.nextInt();
+                                                	  lector.nextLine();
+                                                	  Espectador e = new Espectador(nombreEspectador, tlfEspectador, edadEspectador);
+                                                	  teatro.venderLocalidad(filaVenta, butacaVenta, e);
+                                                	  break;
 
                                                   case '5':
+                                                	  System.out.println("Introduzca fila");
+                                                	  int filaCancelacion = lector.nextInt();
+                                                	  lector.nextLine();
+                                                	  System.out.println("Introduzca butaca");
+                                                	  int butacaCancelacion = lector.nextInt();                                                	  
+                                                	  lector.nextLine();    
+                                                	  System.out.println(teatro.cancelarLocalidad(filaCancelacion, butacaCancelacion));
+                                                	  break;
 
                                                   case '6':
-
-                                                  case '7':
+                                                	  System.out.println("Introduzca fila");
+                                                	  int filaConsultada = lector.nextInt();
+                                                	  lector.nextLine();
+                                                	  System.out.println("Introduzca butaca");
+                                                	  int butacaConsultada = lector.nextInt();                                                	  
+                                                	  lector.nextLine();   
+                                                	  System.out.println(teatro.consultarLocalidad(filaConsultada, butacaConsultada));
+                                                	  break;
+ 
+                                                  case '7': System.out.println(teatro.calcularRecaudacion());
+                                                  break;
 
                                                   case '8':
 

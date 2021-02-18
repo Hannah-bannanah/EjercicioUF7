@@ -18,7 +18,7 @@ public class Espectador {
 	 * @param tlf
 	 * @param edad
 	 */
-	protected Espectador(String nombre, String tlf, int edad) {
+	public Espectador(String nombre, String tlf, int edad) {
 		this.nombre = nombre;
 		this.tlf = tlf;
 		this.edad = edad;

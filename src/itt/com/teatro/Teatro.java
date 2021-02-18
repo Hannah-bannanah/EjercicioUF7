@@ -132,7 +132,7 @@ public class Teatro extends Local implements Sala{
 		String localidadesOcupadas = "Lista de ocupadas ocupadas en formato fila:butaca";
 		for (int f = 0; f < this.localidades.length; f++) {
 			for (int b = 0; b < this.localidades[f].length; b++) {
-				if (this.localidades[f][b] == null) {
+				if (this.localidades[f][b] != null) {
 					localidadesOcupadas = localidadesOcupadas + f + ":" + b + "\n";
 				}
 			}
