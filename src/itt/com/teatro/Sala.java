@@ -3,7 +3,7 @@ package itt.com.teatro;
 /**
  * La interfaz Sala contiene métodos relativos a un espectáculo
  * @author hannnah
- *
+ * @version 1.0
  */
 
 public interface Sala {
