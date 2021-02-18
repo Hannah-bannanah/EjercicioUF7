@@ -1,0 +1,206 @@
+package itt.com.teatro;
+
+import java.text.DecimalFormat;
+
+/**
+ * La clase teatro representa un teatro. 
+ * Puede o no tener actualemente una función
+ * @author hannnah
+ * @version 1.0
+ * @since v1.0
+ */
+
+public class Teatro extends Local implements Sala{
+	Obra obra;
+	double precio;
+	Espectador[][] localidades;
+	
+	/**
+	 * Constructor de la clase Teatro sin una función predeterminada.
+	 * Se asume que el teatro tiene 5 filas con 10 butacas cada una. Todas las butacas están vacías
+	 * @param domicilio la dirección donde se encuentra el teatro
+	 * @param metros el área en metros cuadrados del teatro
+	 * @param accesos el número de accesos al teatro
+	 */
+	public Teatro(String domicilio, int metros, int accesos) {
+		super(domicilio, metros, accesos);
+		this.obra = new Obra("TBD", "TBD", 0);
+		this.precio = 0.0;
+		this.localidades = new Espectador[5][10];
+	}
+
+	/**
+	 * Constructor de la clase Teatro con una función predeterminada.
+	 * Se asume que el teatro tiene 5 filas con 10 butacas cada una. Todas las butacas están vacías
+	 * @param domicilio la dirección donde se encuentra el teatro
+	 * @param metros el área en metros cuadrados del teatro
+	 * @param accesos el número de accesos al teatro
+	 * @param obra la obra que el teatro va a representar
+	 * @param precio el precio de la entrada
+	 */
+	public Teatro(String domicilio, int metros, int accesos, Obra obra, double precio) {
+		super(domicilio, metros, accesos);
+		this.obra = obra;
+		this.precio = precio;
+		this.localidades = new Espectador[5][10];
+	}
+
+	/**
+	 * Constructor de la clase Teatro con una función predeterminada.
+	 * Todas las butacas están vacías
+	 * @param domicilio la dirección donde se encuentra el teatro
+	 * @param metros el área en metros cuadrados del teatro
+	 * @param accesos el número de accesos al teatro
+	 * @param obra la obra que el teatro va a representar
+	 * @param precio el precio de la entrada
+	 * @param filas número de filas en el teatro
+	 * @param butacas número de butacas por cada fila
+	 */
+	public Teatro(String domicilio, int metros, int accesos, Obra obra, double precio, int filas, int butacas) {
+		super(domicilio, metros, accesos);
+		this.obra = obra;
+		this.precio = precio;
+		this.localidades = new Espectador[filas][butacas];
+	}
+
+	/**
+	 * @return the obra
+	 */
+	public Obra getObra() {
+		return obra;
+	}
+
+	/**
+	 * @param obra the obra to set
+	 */
+	public void setObra(Obra obra) {
+		this.obra = obra;
+	}
+
+	/**
+	 * @return the precio
+	 */
+	public double getPrecio() {
+		return precio;
+	}
+
+	/**
+	 * @param precio the precio to set
+	 */
+	public void setPrecio(double precio) {
+		this.precio = precio;
+	}
+
+	/**
+	 * @return the localidades
+	 */
+	public Espectador[][] getLocalidades() {
+		return localidades;
+	}
+	
+	/**
+	 * @return una cadena con la obra representada en el teatro
+	 */
+	public String verProgramacion() {
+		return this.obra.toString();
+	}
+	
+	/**
+	 * @return una cadena con una representación visual de todas las localidades del teatro
+	 * (las butacas ocupadas se marcan con una X)
+	 */
+	public String verLocalidades() {
+		String cadenaLocalidades = "";
+		for (int f = 0; f < this.localidades.length; f++) {
+			for (int b = 0; b < this.localidades[f].length; b++) {
+				if (this.localidades[f][b] == null) {
+					cadenaLocalidades = cadenaLocalidades + "[ ]";
+				} else {
+					cadenaLocalidades = cadenaLocalidades + "[X]";
+				}
+			}
+			cadenaLocalidades = cadenaLocalidades + "\n";
+		}
+		
+		return cadenaLocalidades;
+	}
+	
+	/**
+	 * @return una lista de las localidades ocupadas en formato fila:butaca
+	 */
+	public String verLocalidadesOcupadas() {
+		String localidadesOcupadas = "Lista de ocupadas ocupadas en formato fila:butaca";
+		for (int f = 0; f < this.localidades.length; f++) {
+			for (int b = 0; b < this.localidades[f].length; b++) {
+				if (this.localidades[f][b] == null) {
+					localidadesOcupadas = localidadesOcupadas + f + ":" + b + "\n";
+				}
+			}
+		}
+		
+		return localidadesOcupadas;
+	}
+	
+
+	/**
+	 * Método que asigna una localidad a un espectador
+	 * @param fila la fila de la localidad
+	 * @param butaca el número de butaca de la localidad
+	 * @param e espectador que compra la entrada
+	 * @return una cadena informando del éxito o fracaso de la operación
+	 */
+	public String venderLocalidad(int fila, int butaca, Espectador e) {
+		if (this.localidades[fila][butaca] != null) {
+			return "Esa localidad ya está ocupada. Seleccione otra localidad";
+		} else {
+			this.localidades[fila][butaca] = e;
+			return this.consultarLocalidad(fila, butaca);
+		}
+	}
+	
+	/**
+	 * Método que libera una localidad si estaba asignada a algún espectador
+	 * @param fila la fila de la localidad
+	 * @param butaca el número de butaca de la localidad
+	 * @return una cadena informando del éxito of fracaso de la operación
+	 */
+	public String cancelarLocalidad(int fila, int butaca) {
+		if (this.localidades[fila][butaca] == null) {
+			return "La localidad indicada ya está libre";
+		} else {
+			this.localidades[fila][butaca] = null;
+			return "Localidad " + fila + ":" + butaca + " queda libre";
+		}
+	}
+	
+	/**
+	 * Método que indica si una localidad está libre u ocupada
+	 * @param fila la fila de la localidad
+	 * @param butaca el número de butaca de la localidad
+	 * @return una cadena informando del estado de la localidad
+	 */
+	public String consultarLocalidad(int fila, int butaca) {
+		String cadena = "La localidad " + fila + ":" + butaca;
+		if (this.localidades[fila][butaca] == null) {
+			cadena = cadena + " está libre";
+		} else {
+			cadena = cadena + " está ocupada por el " + this.localidades[fila][butaca].toString();
+		}
+		return cadena;
+	}
+	
+	/**
+	 * @return la recaudación total del teatro para la obra actual
+	 */
+	public double calcularRecaudacion() {
+		int espectadores = 0;
+		for (int f = 0; f < this.localidades.length; f ++) {
+			for (int b = 0; b < this.localidades[f].length; b++) {
+				if (this.localidades[f][b] != null)
+					espectadores ++;
+			}
+		}
+		return espectadores * this.precio;
+	}
+	
+}
