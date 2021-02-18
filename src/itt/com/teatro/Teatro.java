@@ -129,7 +129,7 @@ public class Teatro extends Local implements Sala{
 	 * @return una lista de las localidades ocupadas en formato fila:butaca
 	 */
 	public String verLocalidadesOcupadas() {
-		String localidadesOcupadas = "Lista de ocupadas ocupadas en formato fila:butaca";
+		String localidadesOcupadas = "Lista de ocupadas ocupadas en formato fila:butaca\n";
 		for (int f = 0; f < this.localidades.length; f++) {
 			for (int b = 0; b < this.localidades[f].length; b++) {
 				if (this.localidades[f][b] != null) {
@@ -153,8 +153,13 @@ public class Teatro extends Local implements Sala{
 		if (this.localidades[fila][butaca] != null) {
 			return "Esa localidad ya está ocupada. Seleccione otra localidad";
 		} else {
-			this.localidades[fila][butaca] = e;
-			return this.consultarLocalidad(fila, butaca);
+			if (fila > 0 && butaca > 0 && fila < this.localidades.length && butaca < this.localidades[0].length) {
+				this.localidades[fila-1][butaca-1] = e;
+				return this.consultarLocalidad(fila, butaca);
+			} else {
+				return "Introduzca un número de fila entre 1 y "  + this.localidades.length + 
+						" y un número de butaca entre 1 y " + this.localidades[0].length;
+			}
 		}
 	}
 	

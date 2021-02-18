@@ -42,7 +42,7 @@ public class Principal {
                                                 	  int edadEspectador = lector.nextInt();
                                                 	  lector.nextLine();
                                                 	  Espectador e = new Espectador(nombreEspectador, tlfEspectador, edadEspectador);
-                                                	  teatro.venderLocalidad(filaVenta, butacaVenta, e);
+                                                	  System.out.println(teatro.venderLocalidad(filaVenta, butacaVenta, e));
                                                 	  break;
 
                                                   case '5':
@@ -70,7 +70,7 @@ public class Principal {
 
                                                   case '8':
 
-                                                  default:
+                                                  default: System.out.println("0_0");
 
                                      }
 
