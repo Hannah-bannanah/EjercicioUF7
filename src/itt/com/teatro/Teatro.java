@@ -1,6 +1,8 @@
 package itt.com.teatro;
 
 import java.text.DecimalFormat;
+import java.util.Map;
+import java.util.HashMap;
 
 /**
  * La clase teatro representa un teatro. 
@@ -11,9 +13,11 @@ import java.text.DecimalFormat;
  */
 
 public class Teatro extends Local implements Sala{
-	Obra obra;
-	double precio;
-	Espectador[][] localidades;
+	private Obra obra;
+	private double precio;
+	private Espectador[][] localidades;
+	private Map descuentos;
+	
 	
 	/**
 	 * Constructor de la clase Teatro sin una función predeterminada.
@@ -27,6 +31,11 @@ public class Teatro extends Local implements Sala{
 		this.obra = new Obra("TBD", "TBD", 0);
 		this.precio = 0.0;
 		this.localidades = new Espectador[5][10];
+		this.descuentos = new HashMap();
+		this.descuentos.put("INFANTIL", 50);
+		this.descuentos.put("MENOR", 20);
+		this.descuentos.put("MAYOR", 0);
+		this.descuentos.put("JUBILADO", 66);
 	}
 
 	/**
@@ -43,6 +52,11 @@ public class Teatro extends Local implements Sala{
 		this.obra = obra;
 		this.precio = precio;
 		this.localidades = new Espectador[5][10];
+		this.descuentos = new HashMap();
+		this.descuentos.put("INFANTIL", 50);
+		this.descuentos.put("MENOR", 20);
+		this.descuentos.put("MAYOR", 0);
+		this.descuentos.put("JUBILADO", 66);
 	}
 
 	/**
@@ -61,6 +75,11 @@ public class Teatro extends Local implements Sala{
 		this.obra = obra;
 		this.precio = precio;
 		this.localidades = new Espectador[filas][butacas];
+		this.descuentos = new HashMap();
+		this.descuentos.put("INFANTIL", 50);
+		this.descuentos.put("MENOR", 20);
+		this.descuentos.put("MAYOR", 0);
+		this.descuentos.put("JUBILADO", 66);
 	}
 	
 	/**
@@ -89,6 +108,21 @@ public class Teatro extends Local implements Sala{
 	 */
 	public void setPrecio(double precio) {
 		this.precio = precio;
+	}
+
+	
+	/**
+	 * @return the descuentos
+	 */
+	public Map getDescuentos() {
+		return descuentos;
+	}
+
+	/**
+	 * @param descuentos the descuentos to set
+	 */
+	public void setDescuentos(Map descuentos) {
+		this.descuentos = descuentos;
 	}
 
 	/**
@@ -181,7 +215,7 @@ public class Teatro extends Local implements Sala{
 	 */
 	public String consultarLocalidad(int fila, int butaca) {
 		String cadena = "La localidad " + fila + ":" + butaca;
-		if (this.localidades[fila - 1][butaca - 1] == null) {
+		if (this.estaLibre(fila, butaca)) {
 			cadena = cadena + " está libre";
 		} else {
 			cadena = cadena + " está ocupada por el " + this.localidades[fila - 1][butaca - 1].toString();
@@ -190,17 +224,34 @@ public class Teatro extends Local implements Sala{
 	}
 	
 	/**
+	 * Método que indica si una localidad está libre u ocupada
+	 * @param fila la fila de la localidad
+	 * @param butaca el número de butaca de la localidad
+	 * @return una cadena informando del estado de la localidad
+	 */
+	public boolean estaLibre(int fila, int butaca) {
+		if (this.localidades[fila -1][butaca -1] == null) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	/**
 	 * @return la recaudación total del teatro para la obra actual
 	 */
 	public double calcularRecaudacion() {
-		int espectadores = 0;
+		double recaudacion = 0.0;
 		for (int f = 0; f < this.localidades.length; f ++) {
 			for (int b = 0; b < this.localidades[f].length; b++) {
-				if (this.localidades[f][b] != null)
-					espectadores ++;
+				if (this.localidades[f][b] != null) {
+					String rango = this.localidades[f][b].rangoEdad();
+					double descuento = (int)this.descuentos.get(rango)/100.0;
+					recaudacion += precio * (1 - descuento);
+				}
 			}
 		}
-		return espectadores * this.precio;
+		return recaudacion;
 	}
 	
 	@Override

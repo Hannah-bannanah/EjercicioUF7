@@ -33,18 +33,25 @@ public class Principal {
                                                 	  lector.nextLine();
                                                 	  System.out.println("Introduzca butaca");
                                                 	  int butacaVenta = lector.nextInt();
-                                                	  lector.nextLine();
-                                                	  System.out.println("Introduzca nombre del espectador");
-                                                	  String nombreEspectador = lector.nextLine();
-                                                	  System.out.println("Introduzca teléfono del espectador");
-                                                	  String tlfEspectador = lector.nextLine();
-                                                	  System.out.println("Introduzca edad del espectador");
-                                                	  int edadEspectador = lector.nextInt();
-                                                	  lector.nextLine();
-                                                	  Espectador e = new Espectador(nombreEspectador, tlfEspectador, edadEspectador);
-                                                	  System.out.println(teatro.venderLocalidad(filaVenta, butacaVenta, e));
-                                                	  break;
-
+                                                	  if (teatro.estaLibre(filaVenta, butacaVenta)) {
+                                                    	  lector.nextLine();
+                                                    	  System.out.println("Introduzca nombre del espectador");
+                                                    	  String nombreEspectador = lector.nextLine();
+                                                    	  System.out.println("Introduzca teléfono del espectador");
+                                                    	  String tlfEspectador = lector.nextLine();
+                                                    	  System.out.println("Introduzca edad del espectador");
+                                                    	  int edadEspectador = lector.nextInt();
+                                                    	  lector.nextLine();
+                                                    	  Espectador e = new Espectador(nombreEspectador, tlfEspectador, edadEspectador);
+                                                    	  System.out.println(teatro.venderLocalidad(filaVenta, butacaVenta, e));
+                                                    	  break;
+                                                	  } else {
+                                                		  lector.nextLine();
+                                                		  System.out.println("Esa butaca ya está ocupada.\nSeleccione la opcion 2 para consultar las localidades disponibles.");
+                                                		  break;
+                                                	  }
+                                                	  //break;
+                                                	  
                                                   case '5':
                                                 	  System.out.println("Introduzca fila");
                                                 	  int filaCancelacion = lector.nextInt();
@@ -69,6 +76,8 @@ public class Principal {
                                                   break;
 
                                                   case '8':
+                                                	  System.out.println("Hasta la vista!");
+                                                	  break;
 
                                                   default: 
                                                 	  System.out.println("0_0");

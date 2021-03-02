@@ -1,5 +1,6 @@
 package itt.com.teatro;
 
+
 /**
  * La clase Espectador representa a un espectador de una obra de teatro.
  * Tan sólo se pueden crear instancias de esta clase desde el paquete itt.com.teatro.
@@ -22,8 +23,9 @@ public class Espectador {
 		this.nombre = nombre;
 		this.tlf = tlf;
 		this.edad = edad;
+		
 	}
-	
+
 	
 	/**
 	 * @return the nombre
@@ -74,11 +76,18 @@ public class Espectador {
 
 
 	/**
-	 * TODO
-	 * @return
+	 * @return rango de edad del Espectador
 	 */
 	public String rangoEdad() {
-		return "";
+		if (this.edad >= 65) {
+			return "JUBILADO";
+		} else if (this.edad < 12){
+			return "INFANTIL";
+		} else if (this.edad < 18) {
+			return "MENOR";
+		} else {
+			return "MAYOR";
+		}
 	}
 	
 	@Override
@@ -92,7 +101,6 @@ public class Espectador {
 		try {
 			super.finalize();
 		} catch (Throwable e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
